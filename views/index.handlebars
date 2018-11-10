@@ -1,6 +1,6 @@
 <div class="row">
 
-    <div class="col-md-4 col-sm-12 col-xs-12">
+    <div class="col-md-4 col-sm-12">
     	<h3 class="heading">Good Burgers</h3>
         {{#each burgers}} 
         	{{#unless this.devoured}} 
@@ -13,7 +13,7 @@
         {{/each}}
     </div>
 
-    <div class="col-md-4 col-sm-12 col-xs-12">
+    <div class="col-md-4 col-sm-12">
     	<img src="/assets/img/burger.png" class="img-responsive" alt="burger">
         <h3 class="heading">Add Good Burgers</h3>
         <form class="add-burger-form" action="/" method="POST">
@@ -24,7 +24,7 @@
         </form>
     </div>
 
-    <div class="col-md-4 col-sm-12 col-xs-12">
+    <div class="col-md-4 col-sm-12">
     	<h3 class="heading">Devoured Good Burgers</h3>
         <div class="list-group">
             {{#each burgers}} 
