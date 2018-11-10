@@ -1,38 +1,82 @@
-// import connection 
-let connection = require("./connection.js");
+//connection
+let connection = require("../config/connection.js");
+
+
+function printQuestionMarks(num) {
+	let arr = [];
+
+	for (let i = 0; i < num; i++) {
+		arr.push("?");
+	}
+
+	return arr.toString();
+}
+
+function objToSql(ob) {
+	let arr = [];
+
+    for (var key in ob) {
+        var value = ob[key];
+        if (Object.hasOwnProperty.call(ob, key)) {
+
+          if (typeof value === "string" && value.indexOf(" ") >= 0) {
+            value = "'" + value + "'";
+          }
+    
+          arr.push(key + "=" + value);
+        }
+    }
+
+	return arr.toString();
+}
 
 let orm = {
-    selectAll: function (table, cb){
-        let query = "SELECT * FROM ??;";
-        connection.query(query, [table], function(err, result){
-            if (err) throw err;
-            cb(result);
-        });
-    },
+	all: function(tableInput, cb) {
+		let queryString = "SELECT * FROM " + tableInput + ";";
+        connection.query(queryString, function(err, result) {
+			if (err) {
+				throw err;
+			}
+			cb(result);
+		});
+	},
 
-    insertOne: function(table, colName, colValue, cb){
-        let query = "INSERT INTO ?? (??) VALUES (?);";
-        connection.query(query, [table, colName, colValue], function(err, result){
-            if (err) throw err; 
-            cb(result);
-        });
-    },
+	create: function(table, cols, vals, cb) {
+		let queryString = "INSERT INTO " + table;
 
-    updateOne: function(table, colName, colValue, idCol, idValue, cb){
-        let query = "UPDATE ?? SET ?? = ? WHERE ?? = ?;";
-        connection.query(query, [table, colName, colValue, idCol, idValue], function(err, result){
-            if (err) throw err; 
-            cb(result);
-        });
-    },
+		queryString += " (";
+		queryString += cols.toString();
+		queryString += ") ";
+		queryString += "VALUES (";
+		queryString += printQuestionMarks(vals.length);
+		queryString += ") ";
 
-    deleteOne: function(table, idCol, idValue, cb){
-        let query = "DELETE FROM ?? WHERE ?? = ?;";
-        connection.query(query, [table, idCol, idValue], function (err, result){
-            if (err) throw err; 
-            cb (result);
-        });
-    }
+		connection.query(queryString, vals, function(err, result) {
+			if (err) {
+				throw err;
+			}
+			cb(result);
+		});
+	},
+
+	update: function(table, objColVals, condition, cb) {
+		let queryString = "UPDATE " + table;
+
+		queryString += " SET ";
+		queryString += objToSql(objColVals);
+		queryString += " WHERE ";
+		queryString += condition;
+
+		connection.query(queryString, function(err, result) {
+			if (err) {
+				throw err;
+			}
+
+			cb(result);
+		});
+	}
 };
 
+
+//export
 module.exports = orm;
