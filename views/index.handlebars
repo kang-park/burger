@@ -1,0 +1,13 @@
+<div class="row">
+
+    <div class="col-md-4 col-sm-12">
+        <h3 class="heading">Eat These Burgers!</h3>
+        {{#each burgers}}
+            {{#unless this.devoured}}
+                <form class="eat-form form-group" action="/{{this.id}}?_method=PUT" method="POST">
+                    {{this.burger_name}}
+                    <input type="hidden" name="eat" value="true">
+                    <button type=""
+                </form>
+    </div>
+</div>
