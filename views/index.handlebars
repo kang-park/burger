@@ -29,9 +29,8 @@
         <div class="list-group">
             {{#each burgers}} 
             	{{#if this.devoured}}
-            		<form class="delete-form form-group" action="/{{this.id}}?_method=DELETE" method="POST">
-            			{{this.burger_name}}
-            			<input type="image" class="trash-icon" src="assets/img/trash.png" alt="trash icon"/>
+            		{{this.burger_name}}
+            		<input type="image" class="trash-icon" src="assets/img/trash.png" alt="trash icon"/>
 					</form>
             	{{/if}} 
             {{/each}}
