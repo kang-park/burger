@@ -4,7 +4,7 @@
     	<h3 class="heading">Good Burgers</h3>
         {{#each burgers}} 
         	{{#unless this.devoured}} 
-		        <form class="eat-form form-group" action="/{{this.id}}?_method=PUT" method="POST">
+		        <form class="eat-form form-group" action="/api/burgers/{{this.id}}?_method=PUT" method="POST">
 		        	{{this.burger_name}}
 		            <input type="hidden" name="eat" value="true">
 		            <input type="image" class="cutlery-icon" src="assets/img/cutlery.png" alt="cutlery icon"/>
